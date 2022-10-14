@@ -7,14 +7,19 @@ function makeBoatVisible (boatArray: Sprite[]) {
     }
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    cursor.setFlag(SpriteFlag.Invisible, false)
+    if (currentBoat == 2) {
+        cursor.setFlag(SpriteFlag.Invisible, false)
+        moveBoatFlag = 0
+    } else {
+        currentBoat += 1
+    }
 })
 function moveBoat (boatArray: any[]) {
     makeBoatVisible(boatArray)
-    if (grid.spriteRow(cursor) == 6 && boatRotateArray[0] == "up") {
+    if (grid.spriteRow(cursor) == 0 - boatArray.length && boatRotateArray[0] == "up") {
         grid.move(cursor, 0, -1)
     }
-    if (grid.spriteCol(cursor) == 9 && boatRotateArray[0] == "sideways") {
+    if (grid.spriteCol(cursor) == 0 - 0 && boatRotateArray[0] == "sideways") {
         grid.move(cursor, -1, 0)
     }
     cursor.setFlag(SpriteFlag.Invisible, true)
@@ -42,6 +47,7 @@ function turnBoat (boatNum: number) {
 }
 let iterator = 0
 let cursor: Sprite = null
+let moveBoatFlag = 0
 let boatRotateArray: string[] = []
 let currentBoat = 0
 currentBoat = 0
@@ -135,7 +141,7 @@ let boatSpriteArray = [[sprites.create(img`
 for (let value of boatSpriteArray) {
     makeBoatVisible(value)
 }
-let moveBoatFlag = 1
+moveBoatFlag = 1
 tiles.setCurrentTilemap(tilemap`level2`)
 cursor = sprites.create(img`
     3 3 3 3 3 . . . . . . 3 3 3 3 3 
